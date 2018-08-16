@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<script>
+    $(function () {
+        $.ajax({
+                    type: "GET",
+                    url: "/getAllUser",
+                    dataType: "json",
+                    success: function(data){
+                        $.each(data["resultList"],function (i,v) {
+                            var html="";
+                            html+="<p>"+v.name+"</p>"+'<p>'+v.id+"</p>"
+                            $("#aaa").html(html);
+                        })
+
+                    }
+
+                })
+    })
+</script>
+<body>
+<div id="aaa">
+</div>
+</body>
+</html>

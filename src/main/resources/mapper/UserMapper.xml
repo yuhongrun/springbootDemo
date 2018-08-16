@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <resultMap id="BaseMap" type="com.example.demo.entity.User">
+        <id column="c_id" property="id" jdbcType="BIGINT"/>
+        <result column="c_name" property="name" jdbcType="VARCHAR"/>
+        <result column="c_password" property="password" jdbcType="VARCHAR"/>
+        <result column="c_email" property="email" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="BaseColumn">
+        c_id,c_name,c_password,c_email
+    </sql>
+    <insert id="insertUser" parameterType="com.example.demo.entity.User">
+        INSERT INTO tb_user
+        (c_name,c_password,c_email)
+        VALUE
+        (#{name},#{password},#{email})
+    </insert>
+    <update id="updateUserEmailById" parameterType="java.lang.Integer">
+        UPDATE tb_user
+        SET
+        <if test="name != null ">c_name = #{name}</if>
+        <if test="password != null">c_password = #{password}</if>
+        c_email = #{email}
+    </update>
+    <delete id="deleteUserById" parameterType="java.lang.Integer">
+        DELETE FROM tb_user
+        WHERE c_id = #{id}
+    </delete>
+    <select id="getUserById" resultMap="BaseMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM tb_user
+        WHERE c_id = #{id}
+    </select>
+    <select id="getAllUser" resultMap="BaseMap">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM tb_user
+    </select>
+</mapper>
